@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--
+[:EVAL:]expand("%:t")[:END:]
+author: [:EVAL:]$USER[:END:]
+created: [:EVAL:]strftime('%Y-%m-%d')[:END:]
+[:EVAL:]system("figlet -f small -k " . toupper(expand('%:t:r')))[:END:]-->
+
+<html lang="en">
+
+<head>
+  <title>[:EVAL:]expand('%:t:r')[:END:]</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="stylesheet" type="text/css" href="css/[:EVAL:]expand('%:t:r')[:END:].css" />
+</head>
+
+<body>
+  <h1>[:EVAL:]expand('%:t:r')[:END:]</h1>
+</body>
+
+</html>
