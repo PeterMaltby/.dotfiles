@@ -1,0 +1,19 @@
+# dotfiles
+# author: peterm
+# created: 2023-04-20
+#  ___    ___  _____  ___  ___  _     ___  ___ 
+# |   \  / _ \|_   _|| __||_ _|| |   | __|/ __|
+# | |) || (_) | | |  | _|  | | | |__ | _| \__ \
+# |___/  \___/  |_|  |_|  |___||____||___||___/
+#                                              
+#############################################################
+
+a repo for storing my personal dotfiles to be shared accross machines
+
+This repo was built with the help of many resources primarilty discovered via:
+- https://dotfiles.github.io/
+
+These dotfiles are for use with the following distro
+- archLinux
+- macOS (WIP)
+- (planned) openBSD
