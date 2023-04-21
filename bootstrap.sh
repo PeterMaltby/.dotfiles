@@ -32,7 +32,7 @@ pLog "getting dot files from location: ${dotDir}"
 git pull origin main
 pCheckError $? "git pull"
 
-for file in .[!.]*; do
+for file in * .[!.]*; do
 	if [[ ${ignore[*]} =~ ${file} ]]
 	then
 		pLog "ignoring ${file}"

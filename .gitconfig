@@ -1,0 +1,12 @@
+[alias]
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	s = status -s
+	# amend staged files to latest commit
+	amend = commit --amend --reuse-message=HEAD
+	contrib = shortlog --summary --numbered
+	
+[user]
+	email = contact@petermaltby.com
+	name = Peter Maltby
+[init]
+	defaultBranch = main

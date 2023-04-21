@@ -19,8 +19,13 @@ export HISTCONTROL=ignoreboth
 # alias scripts
 alias mv='mv -i'
 alias rm='rm -i'
-alias ls='ls -lrth'
+alias ls='ls -lrth --group-directories-first --color=auto'
+alias lsa='ls -Alrth --group-directories-first --color=auto'
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
+weather() { curl wttr.in/Lincoln,+United+Kingdom }
 
 # ZSH config
 HISTFILE=~/.histfile
@@ -35,44 +40,19 @@ compinit
 # autocomplete hidden files
 _comp_options+=(globdots)
 
-host=`hostname`
-case $host in
-'homeArch')
-	PS1='%n%B@%F{4}%m%f%b %~ %(!.#.$) '
+host=$(hostname)
+hostRcPath="${HOME}/zsh/${host}.zsh"
 
-	wttr() { curl wttr.in/Lincoln,+United+Kingdom }
-	alias ls='ls -lrth --group-directories-first --color=auto'
+echo ${hostRcPath}
 
-	neofetch --ascii_colors 4 4 --colors 4 12 13 13 13 12
-
-	PATH=$PATH:$HOME/.cargo/bin
-	;;
-'HOLBMAC2259')
-	PS1='%n%B@%F{9}%m%f%b %~ %(!.#.$) '
-
-	alias ls='ls -lrth --color=auto'
-	wttr() { curl wttr.in/Lincoln,+United+Kingdom }
-
- 	export GROOVY_HOME=/opt/homebrew/opt/groovy/libexec
- 	alias j17="export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.5) ; java -version"
- 	alias j18="export JAVA_HOME=$(/usr/libexec/java_home -v 18.0.2.1) ; java -version"
- 	alias j19="export JAVA_HOME=$(/usr/libexec/java_home -v 19.0.1) ; java -version"
- 	defaults write .GlobalPreferences com.apple.mouse.scaling -1
-
-	neofetch
-	;;
-'dobsd')
-	PS1='%n%B@%F{3}%m%f%b %~ %(!.#.$) '
-
-	neofetch
-	;;
-'do-rocky')
-	PS1='%n%B@%F{14}%m%f%b %~ %(!.#.$) '
-
-	neofetch
-	;;
-*)
-	PS1='%B%n%b@%F{1}%m%f %~ %(!.#.$) '
+if [ -r ${hostRcPath} ]; then
+	echo "homeArch!"
+	source ${hostRcPath}
+else
+	# i have to set each PS1 in host.zsh to set color if there is a better way to do this please let me know!
+	PS1=$(%B%n%b@%F{1}%m%f %~ %(!.#.$) )
 	echo "unrecognised host: $host"
-	;;
-esac
+fi
+
+unset host
+unset hostRcPath
