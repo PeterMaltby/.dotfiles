@@ -42,14 +42,14 @@ for file in .[!.]*; do
 	filePath=${dotDir}/${file}
 	dstPath=${HOME}/${file}
 
-	if [ -f "$dstPath" -o -d "$dstPath" -o -L "$dstPath" ]; then
+	if [ -f "$dstPath" ] || [ -d "$dstPath" ] || [ -L "$dstPath" ]; then
 		pLog "backing up ${file} in ${backupDir}"
 	
-		mkdir -p ${backupDir}
-		mv --verbose ${dstPath} "${backupDir}/${file}"
+		mkdir -p "${backupDir}"
+		mv "${dstPath}" "${backupDir}/${file}"
 	fi
 
-	ln --verbose --symbolic --relative ${filePath} ${dstPath}
+	ln --symbolic --relative "${filePath}" "${dstPath}"
 	pCheckError $? "create symbolic link"
 
 	pLog "symbolic link created ${dstPath} -> ${filePath}"
