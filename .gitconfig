@@ -10,3 +10,5 @@
 	name = Peter Maltby
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
