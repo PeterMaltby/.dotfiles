@@ -11,7 +11,8 @@
 a repo for storing my personal dotfiles to be shared accross machines
 
 This repo was built with the help of many resources primarilty discovered via:
-- https://dotfiles.github.io/
+- dotfiles.github.io/
+- github.com/webpro/awesome-dotfiles
 
 These dotfiles are for use with the following distro
 - archLinux
