@@ -27,7 +27,8 @@ hostRcPath="${HOME}/hosts/${hostName}.bash"
 if [ -r ${hostRcPath} ]; then
 	source "${hostRcPath}"
 else
-	PS1='\[\e[0m\]\u\[\e[0m\]@\[\e[0;1;32m\]\h \[\e[0m\]\w \[\e[0m\]\$ \[\e[0m\]'
+	echo "unknown host ${hostName}"
+	PS1='\[\e[0m\]\u\[\e[0m\]@\[\e[1;31;40m\]\h \[\e[0m\]\w \[\e[0m\]\$ \[\e[0m\]'
 fi
 
 unset hostName
