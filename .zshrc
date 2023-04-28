@@ -40,19 +40,17 @@ compinit
 # autocomplete hidden files
 _comp_options+=(globdots)
 
-host=$(hostname)
-hostRcPath="${HOME}/zsh/${host}.zsh"
 
-echo ${hostRcPath}
+hostName=$(hostname)
+hostRcPath="${HOME}/zsh/${hostName}.zsh"
 
 if [ -r ${hostRcPath} ]; then
-	echo "homeArch!"
 	source ${hostRcPath}
 else
 	# i have to set each PS1 in host.zsh to set color if there is a better way to do this please let me know!
-	PS1=$(%B%n%b@%F{1}%m%f %~ %(!.#.$) )
-	echo "unrecognised host: $host"
+	PS1='%B%n%b@%F{1}%m%f %~ %(!.#.$) '
+	echo "unrecognised host: $hostName"
 fi
 
-unset host
+unset hostName
 unset hostRcPath
