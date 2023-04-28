@@ -42,7 +42,7 @@ _comp_options+=(globdots)
 
 
 hostName=$(hostname)
-hostRcPath="${HOME}/zsh/${hostName}.zsh"
+hostRcPath="${HOME}/hosts/${hostName}.zsh"
 
 if [ -r ${hostRcPath} ]; then
 	source ${hostRcPath}
