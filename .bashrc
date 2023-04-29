@@ -9,6 +9,7 @@
 #############################################################
 # Environment vars
 export G=~/gitrepos
+export S=~/scripts
 
 export EDITOR=vim
 

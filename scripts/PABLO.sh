@@ -37,7 +37,7 @@ masterLog="${masterLogDir}/${hostName}_${dateStamp}.log"
 # how many days to retain logs (will be removed)
 logRetention=30
 
-# how many days to retain logs (will be removed)
+# how many days to retain output (will be removed)
 outputRetention=90
 
 # can this script run more then once
@@ -57,12 +57,16 @@ pStart () {
 	logFile="${logsDir}/${scriptName}_${dateStamp}.log"
 	runFlagFile="${runFlagsDir}/${scriptName}.txt"
 
+	startTimeStamp=$(date +%s)
+
 	# regex to check valid script name
-	checkRegex="^[0-9a-zA-Z_]*\.sh$"
+	checkRegex="^[0-9a-zA-Z_-]*\.sh$"
+
+	echo "${scriptNameFull}"
 
 	# if script name is invalid fail
 	if [[ ! ${scriptNameFull} =~ ${checkRegex} ]]; then
-		pError "START failed: name invalid \"${scriptNameFull}\}"
+		pError "START failed: name invalid \"${scriptNameFull}\""
 	fi
 	
 	if test -e "${runFlagFile}" && ${overunProtection} ; then
@@ -80,7 +84,6 @@ pStart () {
 	touch "${runFlagFile}"
 	echo $$ > "${runFlagFile}"
 
-	startTimeStamp=$(date +%s)
 
 	pMasterLog "STARTED: with PID \"${pid}\""
 
