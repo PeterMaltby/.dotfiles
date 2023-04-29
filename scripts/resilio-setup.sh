@@ -13,6 +13,9 @@ configFile="${tmpDir}/sync.conf"
 keysFile="${inputDir}/keys.txt"
 keyCheckRegex="^F[0-9A-Z]{32,32}$"
 
+user="peterm"
+syncStorage="/home/${user}/resilioSync"
+
 #############################################################
 pStart
 
@@ -28,8 +31,8 @@ cat > "${configFile}" << EOF
 {
 	"device_name": "${hostName}",
 	"listening_port": 8888,
-	"storage_path": "/root/rslsync/.sync",
-	"pid_file": "/root/rslsync/.sync/rslsync.pid",
+	"storage_path": "${syncStorage}/.sync",
+	"pid_file": "${syncStorage}/.sync/rslsync.pid",
 	"use_upnp": false,
 
 	"shared_folders" :
@@ -53,7 +56,7 @@ while read -r key; do
 	cat >> "${configFile}" << EOF
 	{
 		"secret": "${key}",
-		"dir": "/root/rslsync/${key}",
+		"dir": "${syncStorage}/${key}",
 		"use_relay_server" : true,
 		"use_tracker": false,
 		"search_lan": false,
@@ -80,17 +83,25 @@ pLog "installing binaries with rpm"
 sudo rpm -i "${downloadedFile}"
 pCheckError $? "rpm install"
 
+pLog "adding users to groups"
+sudo usermod -aG "${user}" rslsync
+pCheckError $? "usermod rslsync and ${user}"
+sudo usermod -aG rslsync "${user}" 
+pCheckError $? "usermod rslsync and ${user}"
+
 pLog "creating rslsync folder and adding config file"
-sudo mkdir -p /root/rslsync/.sync
-sudo cp "${configFile}" /root/rslsync/sync.conf
+mkdir -p "${syncStorage}/.sync"
+sudo chmod g+rw "${syncStorage}"
+pCheckError $? "chmod ${syncStorage}"
+cp "${configFile}" "${syncStorage}/sync.conf"
 
-pLog "modifying service file to point to config"
-sudo sed -i 's|${SYNC_CONF_DIR}/config.json|/root/rslsync/sync.conf|g' /usr/lib/systemd/system/resilio-sync.service
-
-pLog "enableing sevice and starting with config file"
-sudo systemctl enable resilio-sync
-pCheckError $? "systemctl enable"
-sudo systemctl start resilio-sync
-pCheckError $? "systemctl start"
+#pLog "modifying service file to point to config"
+#sudo sed -i 's|${SYNC_CONF_DIR}/config.json|/root/rslsync/sync.conf|g' /usr/lib/systemd/system/resilio-sync.service
+#
+#pLog "enableing sevice and starting with config file"
+#sudo systemctl enable resilio-sync
+#pCheckError $? "systemctl enable"
+#sudo systemctl start resilio-sync
+#pCheckError $? "systemctl start"
 
 pEnd
