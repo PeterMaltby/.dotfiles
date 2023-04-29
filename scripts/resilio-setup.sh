@@ -13,6 +13,8 @@ configFile="${tmpDir}/sync.conf"
 keysFile="${inputDir}/keys.txt"
 keyCheckRegex="^F[0-9A-Z]{32,32}$"
 
+serviceFile="${tmpDir}/resilio-sync.service"
+
 user="peterm"
 syncStorage="/home/${user}/resilioSync"
 
@@ -95,13 +97,48 @@ sudo chmod g+rw "${syncStorage}"
 pCheckError $? "chmod ${syncStorage}"
 cp "${configFile}" "${syncStorage}/sync.conf"
 
-#pLog "modifying service file to point to config"
-#sudo sed -i 's|${SYNC_CONF_DIR}/config.json|/root/rslsync/sync.conf|g' /usr/lib/systemd/system/resilio-sync.service
-#
-#pLog "enableing sevice and starting with config file"
-#sudo systemctl enable resilio-sync
-#pCheckError $? "systemctl enable"
-#sudo systemctl start resilio-sync
-#pCheckError $? "systemctl start"
+pLog "generating service file"
+cat > "${serviceFile}" << EOF
+[Unit]
+Description=Resilio Sync service
+Documentation=https://help.resilio.com
+After=network.target
+
+[Service]
+Type=forking
+UMask=0002
+Restart=on-failure
+PermissionsStartOnly=true
+
+User=rslsync
+Group=rslsync
+Environment="SYNC_USER=rslsync"
+Environment="SYNC_GROUP=rslsync"
+
+Environment="SYNC_RUN_DIR=/var/run/resilio-sync"
+Environment="SYNC_LIB_DIR=/var/lib/resilio-sync"
+Environment="SYNC_CONF_DIR=${syncStorage}"
+
+PIDFile=/var/run/resilio-sync/sync.pid
+
+ExecStartPre=/bin/mkdir -p \${SYNC_RUN_DIR} \${SYNC_LIB_DIR}
+ExecStartPre=/bin/chown -R \${SYNC_USER}:\${SYNC_GROUP} \${SYNC_RUN_DIR} \${SYNC_LIB_DIR}
+ExecStart=/usr/bin/rslsync --config ${syncStorage}/sync.conf
+ExecStartPost=/bin/sleep 1
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo cp "${serviceFile}" /usr/lib/systemd/system/resilio-sync.service
+pCheckError $? "cp service file to systemd"
+sudo chown root:root /usr/lib/systemd/system/resilio-sync.service
+sudo chmod 644 /usr/lib/systemd/system/resilio-sync.service
+
+pLog "enableing sevice and starting with config file"
+sudo systemctl enable resilio-sync
+pCheckError $? "systemctl enable"
+sudo systemctl start resilio-sync
+pCheckError $? "systemctl start"
 
 pEnd
