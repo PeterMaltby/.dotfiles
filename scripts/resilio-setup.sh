@@ -80,12 +80,17 @@ pLog "installing binaries with rpm"
 sudo rpm -i "${downloadedFile}"
 pCheckError $? "rpm install"
 
+pLog "creating rslsync folder and adding config file"
 sudo mkdir -p /root/rslsync/.sync
+sudo cp "${configFile}" /root/rslsync/sync.conf
 
-sudo mv "${configFile}" /root/rslsync/.sync/sync.conf
+pLog "modifying service file to point to config"
+sudo sed -i 's|${SYNC_CONF_DIR}/config.json|/root/rslsync/sync.conf|g' /usr/lib/systemd/system/resilio-sync.service
 
+pLog "enableing sevice and starting with config file"
 sudo systemctl enable resilio-sync
+pCheckError $? "systemctl enable"
 sudo systemctl start resilio-sync
-
+pCheckError $? "systemctl start"
 
 pEnd
