@@ -16,7 +16,7 @@ keyCheckRegex="^F[0-9A-Z]{32,32}$"
 serviceFile="${tmpDir}/resilio-sync.service"
 
 user="peterm"
-syncStorage="/home/${user}/resilioSync"
+syncStorage="/resilioSync"
 
 #############################################################
 pStart
@@ -88,14 +88,18 @@ pCheckError $? "rpm install"
 pLog "adding users to groups"
 sudo usermod -aG "${user}" rslsync
 pCheckError $? "usermod rslsync and ${user}"
-sudo usermod -aG rslsync "${user}" 
+sudo usermod -aG rslsync "${user}"
 pCheckError $? "usermod rslsync and ${user}"
 
 pLog "creating rslsync folder and adding config file"
-mkdir -p "${syncStorage}/.sync"
+sudo mkdir -p "${syncStorage}/.sync"
 sudo chmod g+rw "${syncStorage}"
 pCheckError $? "chmod ${syncStorage}"
-cp "${configFile}" "${syncStorage}/sync.conf"
+sudo cp "${configFile}" "${syncStorage}/sync.conf"
+pCheckError $? "cp config file to ${syncStorage}"
+
+sudo chown -R rslsync:rslsync "${syncStorage}"
+pCheckError $? "chown ${syncStorage}"
 
 pLog "generating service file"
 cat > "${serviceFile}" << EOF
@@ -133,12 +137,10 @@ EOF
 sudo cp "${serviceFile}" /usr/lib/systemd/system/resilio-sync.service
 pCheckError $? "cp service file to systemd"
 sudo chown root:root /usr/lib/systemd/system/resilio-sync.service
+pCheckError $? "chown of service file"
 sudo chmod 644 /usr/lib/systemd/system/resilio-sync.service
+pCheckError $? "chmod of service file"
 
-pLog "enableing sevice and starting with config file"
-sudo systemctl enable resilio-sync
-pCheckError $? "systemctl enable"
-sudo systemctl start resilio-sync
-pCheckError $? "systemctl start"
+pLog "service created sucessfully! please enable and start the systemctl service"
 
 pEnd
