@@ -29,8 +29,8 @@ pStart
 dotDir=$(pwd -P)
 pLog "getting dot files from location: ${dotDir}"
 
-git pull origin main
-pCheckError $? "git pull"
+#git pull origin main
+#pCheckError $? "git pull"
 
 for file in * .[!.]*; do
 	if [[ ${ignore[*]} =~ ${file} ]]
