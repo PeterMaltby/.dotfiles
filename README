@@ -16,5 +16,6 @@ This repo was built with the help of many resources primarilty discovered via:
 
 These dotfiles are for use with the following distro
 - archLinux
-- macOS (WIP)
+- macOS
+- cent-os
 - (planned) openBSD
