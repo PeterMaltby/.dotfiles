@@ -43,6 +43,11 @@ for file in * .[!.]*; do
 	filePath=${dotDir}/${file}
 	dstPath=${HOME}/${file}
 
+	if [ -L "$dstPath" ] ; then
+		pLog "symbolic link already exsists at ${dstPath}"
+		continue;
+	fi
+
 	if [ -f "$dstPath" ] || [ -d "$dstPath" ] || [ -L "$dstPath" ]; then
 		pLog "backing up ${file} in ${backupDir}"
 	
@@ -57,15 +62,20 @@ for file in * .[!.]*; do
 	
 done
 
-for file in .config/*; do
+for file in .config/* ; do
 
 	filePath=${dotDir}/${file}
 	dstPath=${HOME}/${file}
 
+	if [ -L "$dstPath" ] ; then
+		pLog "symbolic link already exsists at ${dstPath}"
+		continue;
+	fi
+
 	if [ -f "$dstPath" ] || [ -d "$dstPath" ] || [ -L "$dstPath" ]; then
 		pLog "backing up ${file} in ${backupDir}"
 	
-		mkdir -p "${backupDir}"
+		mkdir -p "${backupDir}/.config"
 		mv "${dstPath}" "${backupDir}/${file}"
 	fi
 
