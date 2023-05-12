@@ -20,6 +20,7 @@ ignore=(
 	.gitmodules
 	.README
 	bootstrap.sh
+	.config
 )
 
 #############################################################
@@ -38,6 +39,25 @@ for file in * .[!.]*; do
 		pLog "ignoring ${file}"
 		continue
 	fi
+
+	filePath=${dotDir}/${file}
+	dstPath=${HOME}/${file}
+
+	if [ -f "$dstPath" ] || [ -d "$dstPath" ] || [ -L "$dstPath" ]; then
+		pLog "backing up ${file} in ${backupDir}"
+	
+		mkdir -p "${backupDir}"
+		mv "${dstPath}" "${backupDir}/${file}"
+	fi
+
+	ln --symbolic --relative "${filePath}" "${dstPath}"
+	pCheckError $? "create symbolic link"
+
+	pLog "symbolic link created ${dstPath} -> ${filePath}"
+	
+done
+
+for file in .config/*; do
 
 	filePath=${dotDir}/${file}
 	dstPath=${HOME}/${file}
