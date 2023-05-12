@@ -24,7 +24,7 @@ alias lsa='ls -Alrth --group-directories-first --color=auto'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-alias vi = "nvim"
+alias vi="nvim"
 
 weather() { curl wttr.in/Lincoln,+United+Kingdom }
 
