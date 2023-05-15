@@ -55,7 +55,7 @@ for file in * .[!.]*; do
 		mv "${dstPath}" "${backupDir}/${file}"
 	fi
 
-	ln --symbolic --relative "${filePath}" "${dstPath}"
+	ln -s "${filePath}" "${dstPath}"
 	pCheckError $? "create symbolic link"
 
 	pLog "symbolic link created ${dstPath} -> ${filePath}"
@@ -79,7 +79,7 @@ for file in .config/* ; do
 		mv "${dstPath}" "${backupDir}/${file}"
 	fi
 
-	ln --symbolic --relative "${filePath}" "${dstPath}"
+	ln -s "${filePath}" "${dstPath}"
 	pCheckError $? "create symbolic link"
 
 	pLog "symbolic link created ${dstPath} -> ${filePath}"

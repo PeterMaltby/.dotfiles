@@ -136,7 +136,7 @@ pEnd () {
 	fi
 	
 	finishTimeStamp=$(date +%s)
-	totalExecTime=$(("$finishTimeStamp" - "$startTimeStamp"))
+	totalExecTime=$(($finishTimeStamp - $startTimeStamp))
 	
 	pMasterLog "ENDED execution in ${totalExecTime} secs"
 
