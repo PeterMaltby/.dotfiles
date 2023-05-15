@@ -54,6 +54,6 @@ template = 'vim'
 rewrite = true
 
 [[item]]
-file = '~/neovim/colors/colors.lua'
+file = '/home/peterm/.config/nvim/default.vim'
 template = 'neovim'
 rewrite = true
