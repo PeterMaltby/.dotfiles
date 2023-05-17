@@ -14,8 +14,8 @@
 #############################################################
 # machine specific zshrc
 
-alias ls=$(ls -lrth --color=auto)
-alias lsa=$(ls -lArth --color=auto)
+alias ls='gls -lrth --group-directories-first --color=auto'
+alias lsa='gls -Alrth --group-directories-first --color=auto'
 
 export GROOVY_HOME=/opt/homebrew/opt/groovy/libexec
 alias j17="export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.5) ; java -version"
