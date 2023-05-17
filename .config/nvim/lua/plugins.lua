@@ -1,24 +1,15 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
-
+	use 'mbbill/undotree'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
-
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-
-	use ('mbbill/undotree')
-
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v1.x',
@@ -40,10 +31,13 @@ return require('packer').startup(function(use)
 		{'hrsh7th/cmp-path'},         -- Optional
 		{'saadparwaiz1/cmp_luasnip'}, -- Optional
 		{'hrsh7th/cmp-nvim-lua'},     -- Optional
-
 		-- Snippets
 		{'L3MON4D3/LuaSnip'},             -- Required
 		{'rafamadriz/friendly-snippets'}, -- Optional
 	}
-}
+	}
+	if packer_bootstrap then
+		require('packer').sync()
+	end
 end)
+
