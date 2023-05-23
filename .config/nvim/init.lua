@@ -62,6 +62,7 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
     end, opts)
 end)
+
 lsp.set_sign_icons({
   error = 'X',
   warn = '⚠',
@@ -72,6 +73,55 @@ lsp.set_sign_icons({
 lsp.nvim_workspace()
 lsp.setup()
 
+vim.diagnostic.config({
+	virtual_text = true
+})
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = nil,
+    section_separators = nil,
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff'},
+    lualine_c = {'filename'},
+    lualine_x = { 'diagnostics' },
+    lualine_y = {'location'},
+    lualine_z = {'encoding'},
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_c = {},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+
+require('lualine').setup()
+
+-- other options
 vim.opt.mouse = ""
 
 vim.opt.guicursor = ""

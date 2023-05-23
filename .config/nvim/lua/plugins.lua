@@ -36,6 +36,12 @@ return require('packer').startup(function(use)
 		{'rafamadriz/friendly-snippets'}, -- Optional
 	}
 	}
+
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
+
 	if packer_bootstrap then
 		require('packer').sync()
 	end
