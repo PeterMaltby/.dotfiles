@@ -37,7 +37,6 @@ return require('packer').startup(function(use)
 		{'rafamadriz/friendly-snippets'}, -- Optional
 	}
 	}
-    
 
     use {
         'nvim-lualine/lualine.nvim',
@@ -47,5 +46,13 @@ return require('packer').startup(function(use)
 	if packer_bootstrap then
 		require('packer').sync()
 	end
+
+    vim.cmd([[
+      augroup packer_user_config
+        autocmd!
+        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+      augroup end
+    ]])
+
 end)
 
