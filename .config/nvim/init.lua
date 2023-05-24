@@ -168,3 +168,7 @@ require('lualine').setup {
     inactive_winbar = {},
     extensions = {}
 }
+
+-- TODO turning off for now want to see if i can change this to work for errors
+-- and warnings only, and keep inline for other diagnostics
+-- require("lsp_lines").setup()
