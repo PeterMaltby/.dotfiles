@@ -9,7 +9,7 @@
 -------------------------------------------------------------
 require("plugins")
 
-color = color or "base"
+color = color or "base16-woodland"
 vim.cmd.colorscheme(color)
 
 local ensure_packer = function()
@@ -65,7 +65,7 @@ end)
 
 lsp.set_sign_icons({
   error = 'X',
-  warn = '⚠',
+  warn = '!',
   hint = '?',
   info = 'i'
 })
@@ -79,10 +79,9 @@ vim.diagnostic.config({
 
 require('lualine').setup {
   options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = nil,
-    section_separators = nil,
+    icons_enabled = false,
+    component_separators = {left = '', right = ''},
+    section_separators = {left = '', right = ''},
     disabled_filetypes = {
       statusline = {},
       winbar = {},
@@ -98,9 +97,20 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {'filename'},
-    lualine_x = { 'diagnostics' },
+    lualine_b = {'branch'},
+    lualine_c = {
+        {
+            'filename',
+            path = 1,
+        }
+    },
+    lualine_x = {
+        {
+        'diagnostics',
+        symbols = {error = 'X:', warn = '!:', info = 'i:', hint = '?:'},
+        always_visible = true,
+        }
+     },
     lualine_y = {'location'},
     lualine_z = {'encoding'},
   },
@@ -108,7 +118,6 @@ require('lualine').setup {
     lualine_a = {},
     lualine_b = {},
     lualine_c = {'filename'},
-    lualine_c = {},
     lualine_x = {'location'},
     lualine_y = {},
     lualine_z = {}
@@ -118,8 +127,6 @@ require('lualine').setup {
   inactive_winbar = {},
   extensions = {}
 }
-
-require('lualine').setup()
 
 -- other options
 vim.opt.mouse = ""
