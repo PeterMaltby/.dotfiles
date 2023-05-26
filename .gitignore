@@ -14,3 +14,4 @@ Thumbs.db
 .Trashes
 
 .vim/.netrwhist
+.config/nvim/plugin/packer_compiled.lua
