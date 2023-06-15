@@ -7,7 +7,7 @@
 dateStamp=$(date "+%Y%m%d")
 timeStamp=$(date "+%H%M")
 
-hostName=$(hostname)
+hostName=$HOSTNAME
 
 scriptNameFull=${0##*/}
 scriptName=$(echo "${0##*/}" | cut -d. -f1)
