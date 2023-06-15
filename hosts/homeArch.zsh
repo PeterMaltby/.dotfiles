@@ -8,5 +8,8 @@
 #                                                                      
 #############################################################
 
+path+=('/home/peterm/.cargo/bin') 
+export PATH
+
 PS1='%n%B@%F{4}%m%f%b %~ %(!.#.$) '
 neofetch --ascii_colors 4 4 --colors 4 12 13 13 13 12
