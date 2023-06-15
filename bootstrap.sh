@@ -27,6 +27,9 @@ ignore=(
 
 pStart
 
+mkdir -p "${HOME}/.config"
+pCheckError "mkdir .config"
+
 dotDir=$(pwd -P)
 pLog "getting dot files from location: ${dotDir}"
 
