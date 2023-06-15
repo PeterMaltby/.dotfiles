@@ -117,10 +117,11 @@ pCheckError () {
 pError () {
 	pMasterLog "ERROR ${1}"
 
-	pEnd
+	pEnd 1
 }
 
 pEnd () {
+        returnCode=${1:-0}
 	# Remove temp files
 	rm -f "${tmpDir}/*"
 	rmRet=$?
@@ -140,5 +141,5 @@ pEnd () {
 	
 	pMasterLog "ENDED execution in ${totalExecTime} secs"
 
-	exit 0
+	exit "$returnCode"
 }
