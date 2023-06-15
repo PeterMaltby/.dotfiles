@@ -10,7 +10,7 @@ configTemplateFile="$S/.share/resilio.template"
 
 serviceFile="${outputDir}/resilio-sync.service"
 
-syncStorage="/resilioSync"
+syncStorage="${HOME}/.config/rslsync"
 
 #############################################################
 pStart
@@ -18,7 +18,7 @@ pStart
 if [ ! -f "${configFile}" ]; then
     pLog "config file ($configFile) not created creating template"
     cp "$configTemplateFile" "$configFile"
-    sed -i "s/DEVICE_NAME/${hostName}/g" "$configFile"
+    sed -i "s/DEVICE_NAME/${USER}@${hostName}/g" "$configFile"
     sed -i "s/STORAGE_PATH/${syncStorage}/g" "$configFile"
     pLog "template config file created at $configFile please populate then rerun"
     pEnd
@@ -27,7 +27,7 @@ fi
 pLog "config file located at $configFile is being installed"
 
 mkdir -p "$syncStorage"
-cp "$configFile" "$syncStorage/sync.conf"
+cp "$configFile" "$syncStorage/rslsync.conf"
 pCheckError $? "cp config file to $syncStorage"
 
 pLog "generating service file"
