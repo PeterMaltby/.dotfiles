@@ -110,7 +110,9 @@ pMasterLog () {
 pCheckError () {
 	if [ "$1" != 0 ]; then
 		pError "$2 failed with return $1"
-	fi
+        else
+                pLog "$2 completed successfully"
+        fi
 }
 
 # will create error log on script and master log
