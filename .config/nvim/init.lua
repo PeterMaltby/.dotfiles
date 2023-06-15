@@ -59,7 +59,7 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query" },
+    ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query" ,"wgsl"},
     sync_install = false,
     auto_install = true,
 
