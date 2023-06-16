@@ -14,14 +14,8 @@
 #############################################################
 # machine specific zshrc
 
-alias ls='gls -lrth --group-directories-first --color=auto'
-alias lsa='gls -Alrth --group-directories-first --color=auto'
-
-export GROOVY_HOME=/opt/homebrew/opt/groovy/libexec
-alias j17="export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.5) ; java -version"
-alias j18="export JAVA_HOME=$(/usr/libexec/java_home -v 18.0.2.1) ; java -version"
-alias j19="export JAVA_HOME=$(/usr/libexec/java_home -v 19.0.1) ; java -version"
-
+alias ls='ls -lrth --color=auto'
+alias lsa='ls -Alrth --color=auto'
 
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 
