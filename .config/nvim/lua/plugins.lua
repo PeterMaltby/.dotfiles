@@ -60,6 +60,13 @@ return require('packer').startup(function(use)
 
     use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+    }
+
     if packer_bootstrap then
         require('packer').sync()
     end

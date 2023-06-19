@@ -46,6 +46,10 @@ vim.opt.colorcolumn = "80"
 Color = Color or "base16-woodland"
 vim.cmd.colorscheme(Color)
 
+-- disable netrw for nvim-tree
+vim.g.loaded_netrw =1
+vim.g.loaded_netrwPlugin =1
+
 -- telescope fuzzy finder
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<F5>', builtin.find_files, {})
@@ -88,6 +92,7 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
     end, opts)
 end)
+
 
 lsp.set_sign_icons({
     error = 'X',
@@ -153,6 +158,10 @@ require('lualine').setup {
     inactive_winbar = {},
     extensions = {}
 }
+
+-- nvim-tree
+require("nvim-tree").setup()
+
 
 -- TODO turning off for now want to see if i can change this to work for errors
 -- and warnings only, and keep inline for other diagnostics
