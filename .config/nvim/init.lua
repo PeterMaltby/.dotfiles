@@ -8,6 +8,7 @@
 --
 -------------------------------------------------------------
 require("plugins")
+require("templates")
 
 -- Basic vim stuff
 vim.opt.mouse = ""
@@ -45,6 +46,19 @@ vim.opt.colorcolumn = "80"
 
 Color = Color or "base16-woodland"
 vim.cmd.colorscheme(Color)
+
+--templates
+
+local augroupId = vim.api.nvim_create_augroup("templates", {clear = true})
+vim.api.nvim_create_autocmd("BufNewFile" , {
+    pattern = "*.*",
+    command = [[silent! execute ' 0r $HOME/.config/nvim/templates/skeleton.'.expand('<afile>:e')]]
+})
+vim.api.nvim_create_autocmd("BufNewFile" , {
+    pattern = "*",
+    command = [[%s#\[:EVAL:]\(.\{-\}\)\[:END:]#\=eval(submatch(1))#ge]]
+})
+vim.api.nvim_del_augroup_by_id(augroupId)
 
 -- disable netrw for nvim-tree
 vim.g.loaded_netrw =1
