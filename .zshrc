@@ -54,5 +54,13 @@ else
 	echo "unrecognised host: $hostName"
 fi
 
+# for storing secret stuff i dont want git to know about
+hostSecretRcPath="${hostRcPath}.secret"
+
+if [ -r ${hostSecretRcPath} ]; then
+    source ${hostSecretRcPath}
+fi
+
+
 unset hostName
 unset hostRcPath

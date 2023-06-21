@@ -15,3 +15,5 @@ Thumbs.db
 
 .vim/.netrwhist
 .config/nvim/plugin/packer_compiled.lua
+
+*.secret
