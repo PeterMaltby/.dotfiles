@@ -8,7 +8,6 @@
 --
 -------------------------------------------------------------
 require("plugins")
-require("templates")
 
 -- Basic vim stuff
 vim.opt.mouse = ""
