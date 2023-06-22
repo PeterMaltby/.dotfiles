@@ -32,6 +32,7 @@ cat > "${configFile}" << EOF
 {
 	"device_name": "${hostName}",
 	"listening_port": 8888,
+        "pid_file": "/run/resilio-sync/sync.pid",
 	"storage_path": "${syncStorage}/.sync",
 	"use_upnp": false,
 
