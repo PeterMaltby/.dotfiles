@@ -33,5 +33,3 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-alias npm='echo "use pnpm for now and see how it goes"'
