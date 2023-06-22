@@ -14,7 +14,8 @@ keysFile="${inputDir}/keys.txt"
 keyCheckRegex="^F[0-9A-Z]{32,32}$"
 
 user="peterm"
-syncStorage="/resilioSync"
+# set this file!
+# syncStorage="/resilioSync"
 syncConfigFile="/etc/resilio-sync/config.json"
 
 #############################################################
