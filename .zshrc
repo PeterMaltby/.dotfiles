@@ -26,6 +26,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias vi="\vim"
 alias vim="\nvim"
+alias wiki="cd ~/peter-wiki/"
 
 weather() { curl wttr.in/Lincoln,+United+Kingdom }
 
