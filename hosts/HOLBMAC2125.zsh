@@ -22,14 +22,15 @@ defaults write .GlobalPreferences com.apple.mouse.scaling -1
 PS1='%n%B@%F{9}%m%f%b %~ %(!.#.$) '
 neofetch
 
+# volta stuff
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# pnpm
-export PNPM_HOME="/Users/peter.maltby1/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+# tf
+alias tf='terraform'
+
+export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=true
