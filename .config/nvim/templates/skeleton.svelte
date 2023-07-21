@@ -11,6 +11,6 @@ created: [:EVAL:]strftime('%Y-%m-%d')[:END:]
     <p>new component</p>
 </div>
 
-<style land="scss">
+<style lang="scss">
 
 </style>
