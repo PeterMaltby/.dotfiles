@@ -7,7 +7,7 @@
 	contrib = shortlog --summary --numbered
 	
 [user]
-	email = peter.maltby1@sainsburys.co.uk
+	email = contact@petermaltby.com
 	name = Peter Maltby
 [init]
 	defaultBranch = main
