@@ -17,6 +17,7 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'mbbill/undotree'
     use 'RRethy/nvim-base16'
+    use 'norcalli/nvim-colorizer.lua'
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
         requires = { { 'nvim-lua/plenary.nvim' } }

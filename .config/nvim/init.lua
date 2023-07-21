@@ -174,6 +174,9 @@ require('lualine').setup {
 -- nvim-tree
 require("nvim-tree").setup()
 
+-- colorizer
+require("colorizer").setup()
+
 
 -- TODO turning off for now want to see if i can change this to work for errors
 -- and warnings only, and keep inline for other diagnostics
