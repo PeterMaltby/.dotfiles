@@ -21,6 +21,13 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
+
+    use { 'mhartington/formatter.nvim' }
+    use { 'folke/trouble.nvim' ,
+        requires = {
+            "nvim-tree/nvim-web-devicons"
+        }
+    }
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
