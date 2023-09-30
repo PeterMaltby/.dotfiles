@@ -5,7 +5,7 @@
 #############################################################
 source "$S/PABLO.sh"
 
-downloadUrl="https://files.teamspeak-services.com/releases/server/3.13.7/teamspeak3-server_linux_x86-3.13.7.tar.bz2"
+downloadUrl="https://files.teamspeak-services.com/releases/server/3.13.7/teamspeak3-server_linux_amd64-3.13.7.tar.bz2"
 downloadedTar="${tmpDir}/teamspeak3.tar.bz2"
 downloadedFiles="${tmpDir}/teamspeakExtract"
 
@@ -68,6 +68,15 @@ pLog "moving service file to ${systemServiceFile}"
 sudo mv "${tmpServiceFile}" ${systemServiceFile}
 pCheckError $? "mv"
 
+pLog "changing ${systemServiceFile} to root owner"
+sudo chown root:root ${systemServiceFile}
+pCheckError $? "chown"
+sudo restorecon ${systemServiceFile}
+pCheckError $? "restorecon"
+
 pLog "service created successfully! please enable and start the systemctl service"
+pLog "\"systemctl --system daemon-reload\""
+pLog "\"systemctl enable teamspeak\""
+
 
 pEnd
