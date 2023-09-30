@@ -29,12 +29,12 @@ curl ${downloadUrl} --output "${downloadedTar}"
 pCheckError $? "curl"
 
 pLog "extracting tar"
-touch "${downloadedFiles}"
+mkdir "${downloadedFiles}/"
 tar -xvf "${downloadedTar}" -C "${downloadedFiles}"
 pCheckError $? "tar"
 
 pLog "moving files to ${teamspeakHomeDir}"
-sudo mv ${downloadedFiles}* ${teamspeakHomeDir}
+sudo mv ${downloadedFiles}/* ${teamspeakHomeDir}
 pCheckError $? "mv"
 
 pLog "agreeing to licence"
