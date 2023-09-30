@@ -34,7 +34,7 @@ tar -xvf "${downloadedTar}" -C "${downloadedFiles}"
 pCheckError $? "tar"
 
 pLog "moving files to ${teamspeakHomeDir}"
-sudo mv "${downloadedFiles}/*" ${teamspeakHomeDir}
+sudo mv ${downloadedFiles}/teamspeak3-server_linux_amd64/* ${teamspeakHomeDir}
 pCheckError $? "mv"
 
 pLog "agreeing to licence"
