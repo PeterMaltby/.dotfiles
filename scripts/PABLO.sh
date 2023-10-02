@@ -43,6 +43,8 @@ outputRetention=90
 # can this script run more then once
 overunProtection=true
 
+quiteMode=false
+
 # ensures dirs are created
 mkdir -p "${logsDir}"
 mkdir -p "${runFlagsDir}"
@@ -94,7 +96,10 @@ pLog () {
 	dateTime=$(date "+%Y-%m-%d %H:%M:%S")
 
 	echo "${dateTime} [${pid}:${scriptName}] ${1}" >> "${logFile}"
-	echo "${dateTime} ${1}"
+
+    if [ $quiteMode == false ]; then
+	    echo "${dateTime} ${1}"
+    fi 
 }
 
 # will create log on script and master log
@@ -102,7 +107,7 @@ pMasterLog () {
 	dateTime=$(date "+%Y-%m-%d %H:%M:%S")
 
 	echo "${dateTime} [${pid}:${scriptName}] ${1}" >> "${masterLog}"
-	pLog "(M)${1}"
+    pLog "(M)${1}"
 }
 
 # will check if ret value is error
@@ -117,6 +122,7 @@ pCheckError () {
 
 # will create error log on script and master log
 pError () {
+    quiteMode=false
 	pMasterLog "ERROR ${1}"
 
 	pEnd 1
@@ -141,7 +147,7 @@ pEnd () {
 	finishTimeStamp=$(date +%s)
 	totalExecTime=$(($finishTimeStamp - $startTimeStamp))
 	
-	pMasterLog "ENDED execution in ${totalExecTime} secs"
+    pMasterLog "ENDED execution in ${totalExecTime} secs (PID \"${pid}\")"
 
 	exit "$returnCode"
 }
