@@ -11,11 +11,11 @@ downloadedFile="${tmpDir}/res-sync.rpm"
 
 configFile="${tmpDir}/sync.conf"
 keysFile="${inputDir}/keys.txt"
-keyCheckRegex="^F[0-9A-Z]{32,32}$"
+keyCheckRegex="^[0-9A-Z]{32,60}$"
 
 user="peterm"
 # set this file!
-# syncStorage="/resilioSync"
+syncStorage="/resilioStore"
 syncConfigFile="/etc/resilio-sync/config.json"
 
 #############################################################
