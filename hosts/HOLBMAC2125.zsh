@@ -26,6 +26,10 @@ neofetch
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
+# deno
+export DENO_INSTALL="/Users/peter.maltby1/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # tf
 alias tf='terraform'
 
