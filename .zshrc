@@ -44,7 +44,7 @@ compinit
 _comp_options+=(globdots)
 
 
-hostName=$(hostname)
+hostName=$HOST
 hostRcPath="${HOME}/hosts/${hostName}.zsh"
 
 if [ -r ${hostRcPath} ]; then
