@@ -9,8 +9,10 @@ sourceListEntry="deb http://linux-packages.resilio.com/resilio-sync/deb resilio-
 sourcePubKeyUrl="https://linux-packages.resilio.com/resilio-sync/key.asc"
 tmpKeyFile="${tmpDir}/key.asc"
 
+keysFile="${inputDir}/keys.txt"
 configFile="${tmpDir}/config.json"
 
+configDeployFile="${HOME}/.config/resilio-sync/config.json"
 
 syncStorage="${HOME}/rslsync"
 #############################################################
@@ -85,7 +87,7 @@ EOF
 pLog "Config file created succesfully at: ${configFile}"
 cat ${configFile}
 
-mv ${configFile} 
+mv ${configFile} ${configDeployFile}
 
 pLog "service created sucessfully! please enable and start the systemctl service"
 
