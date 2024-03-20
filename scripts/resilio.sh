@@ -11,7 +11,6 @@ configTemplateFile="$S/.share/resilio.template"
 serviceFile="${outputDir}/resilio-sync.service"
 
 syncStorage="${HOME}/.config/rslsync"
-
 #############################################################
 pStart
 
