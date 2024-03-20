@@ -17,19 +17,6 @@ configDeployFile="${HOME}/.config/resilio-sync/config.json"
 syncStorage="${HOME}/rslsync"
 #############################################################
 pStart
-
-pLog "adding resilio source to sources list"
-echo $sourceListEntry | sudo tee -a /etc/apt/sources.list
-pCheckError $? "adding source to source entry list"
-
-pLog "getting and adding gpg key from $sourcePubKeyUrl"
-wget -qO- $sourcePubKeyUrl | sudo tee /etc/apt/trusted.gpg.d/resilio.asc
-pCheckError $? "curl pub key"
-
-pLog "installing resilio"
-sudo apt update
-sudo apt install resilio-sync
-
 if [ ! -f "${keysFile}" ]; then
 	pLog "populate ${keysFile} with keys for folders you wish to sync, then rerun"
 	pEnd
@@ -42,8 +29,6 @@ cat > "${configFile}" << EOF
 {
 	"device_name": "${hostName}",
 	"listening_port": 8888,
-        "pid_file": "/run/resilio-sync/sync.pid",
-	"storage_path": "${syncStorage}/.sync",
 	"use_upnp": false,
 
 	"shared_folders" :
@@ -87,7 +72,26 @@ EOF
 pLog "Config file created succesfully at: ${configFile}"
 cat ${configFile}
 
-mv ${configFile} ${configDeployFile}
+#pLog "adding resilio source to sources list"
+#echo $sourceListEntry | sudo tee -a /etc/apt/sources.list
+#pCheckError $? "adding source to source entry list"
+#
+#pLog "getting and adding gpg key from $sourcePubKeyUrl"
+#wget -qO- $sourcePubKeyUrl | sudo tee /etc/apt/trusted.gpg.d/resilio.asc
+#pCheckError $? "curl pub key"
+#
+#pLog "installing resilio"
+#sudo apt update
+#sudo apt install resilio-sync
+
+pLog "moving ${configFile} to ${configDeployFile}"
+sudo mv ${configFile} ${configDeployFile}
+pCheckError $? "mv"
+
+# pLog "changing ${configDeployFile} perms"
+# sudo chown rslsync:rslsync ${configDeployFile}
+# pCheckError $? "chown"
+
 
 pLog "service created sucessfully! please enable and start the systemctl service"
 

@@ -1,8 +1,6 @@
 {
 	"device_name": "DEVICE_NAME",
 	"listening_port": 8888,
-	"storage_path": "STORAGE_PATH",
-	"pid_file": "STORAGE_PATH/rslsync.pid",
 	"use_upnp": false,
 
 	"shared_folders" :
