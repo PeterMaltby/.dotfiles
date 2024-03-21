@@ -12,9 +12,9 @@ tmpKeyFile="${tmpDir}/key.asc"
 keysFile="${inputDir}/keys.txt"
 configFile="${tmpDir}/config.json"
 
-configDeployFile="${HOME}/.config/resilio-sync/config.json"
+configDeployFile="/etc/resilio-sync/config.json"
 
-syncStorage="${HOME}/rslsync"
+syncStorage="home/rslsync"
 #############################################################
 pStart
 if [ ! -f "${keysFile}" ]; then
@@ -29,6 +29,8 @@ cat > "${configFile}" << EOF
 {
 	"device_name": "${hostName}",
 	"listening_port": 8888,
+    "pid_file": "/run/resilio-sync/sync.pid",
+    "storage_path": "${syncStorage}/.sync",
 	"use_upnp": false,
 
 	"shared_folders" :
@@ -54,7 +56,7 @@ while read -r key; do
 		"secret": "${key}",
 		"dir": "${syncStorage}/${key}",
 		"use_relay_server" : true,
-		"use_tracker": false,
+		"use_tracker": true,
 		"search_lan": false,
 		"use_sync_trash" : false,
 		"overwrite_changes": false,
@@ -72,26 +74,21 @@ EOF
 pLog "Config file created succesfully at: ${configFile}"
 cat ${configFile}
 
-#pLog "adding resilio source to sources list"
-#echo $sourceListEntry | sudo tee -a /etc/apt/sources.list
-#pCheckError $? "adding source to source entry list"
-#
-#pLog "getting and adding gpg key from $sourcePubKeyUrl"
-#wget -qO- $sourcePubKeyUrl | sudo tee /etc/apt/trusted.gpg.d/resilio.asc
-#pCheckError $? "curl pub key"
-#
-#pLog "installing resilio"
-#sudo apt update
-#sudo apt install resilio-sync
+pLog "adding resilio source to sources list"
+echo $sourceListEntry | sudo tee -a /etc/apt/sources.list
+pCheckError $? "adding source to source entry list"
+
+pLog "getting and adding gpg key from $sourcePubKeyUrl"
+wget -qO- $sourcePubKeyUrl | sudo tee /etc/apt/trusted.gpg.d/resilio.asc
+pCheckError $? "curl pub key"
+
+pLog "installing resilio"
+sudo apt update
+sudo apt install resilio-sync
 
 pLog "moving ${configFile} to ${configDeployFile}"
 sudo mv ${configFile} ${configDeployFile}
 pCheckError $? "mv"
-
-# pLog "changing ${configDeployFile} perms"
-# sudo chown rslsync:rslsync ${configDeployFile}
-# pCheckError $? "chown"
-
 
 pLog "service created sucessfully! please enable and start the systemctl service"
 
