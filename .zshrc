@@ -16,6 +16,7 @@ export G=~/gitrepos
 export EDITOR=vim
 export HISTCONTROL=ignoreboth
 
+export LANG="en_GB.UTF-8"
 # alias scripts
 alias mv='mv -i'
 alias rm='rm -i'
@@ -28,7 +29,10 @@ alias vi="\vim"
 alias vim="\nvim"
 alias wiki="cd ~/peter-wiki/"
 
-weather() { curl wttr.in/Lincoln,+United+Kingdom }
+weather() { 
+    clear
+    curl wttr.in/Lincoln,+United+Kingdom 
+}
 
 # ZSH config
 HISTFILE=~/.histfile

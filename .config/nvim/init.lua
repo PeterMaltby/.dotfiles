@@ -17,7 +17,7 @@ vim.opt.nu = true
 vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
-vim.opt.tabstop = 4
+vim.opt.tabstop = 8
 vim.opt.shiftwidth = 4
 
 vim.opt.smartindent = true
@@ -41,6 +41,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+vim.opt.spelllang="en_gb"
+vim.opt.spell = true
 
 Color = Color or "base16-woodland"
 vim.cmd.colorscheme(Color)
@@ -101,7 +104,12 @@ local lsp = require('lsp-zero').preset({
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr }
     vim.keymap.set({ 'n', 'x' }, '<F3>', function()
-        vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+        vim.lsp.buf.format({ 
+            async = false,
+            timeout_ms = 10000, 
+            formatting_options = {
+                tabSize = 4,
+        }})
     end, opts)
 end)
 
