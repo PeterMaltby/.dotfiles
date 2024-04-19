@@ -20,8 +20,8 @@ export LANG="en_GB.UTF-8"
 # alias scripts
 alias mv='mv -i'
 alias rm='rm -i'
-alias ls='ls -lrth --group-directories-first --color=auto'
-alias lsa='ls -Alrth --group-directories-first --color=auto'
+alias ls='ls -lrh --group-directories-first --color=auto'
+alias lsa='ls -Alrh --group-directories-first --color=auto'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
