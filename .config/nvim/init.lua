@@ -18,7 +18,7 @@ vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 8
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 
 vim.opt.smartindent = true
 vim.opt.autoindent = true
@@ -185,6 +185,28 @@ require("nvim-tree").setup()
 -- colorizer
 require("colorizer").setup()
 
+local setup_godot_dap = function()
+    local dap = require("dap")
+
+    dap.adapters.godot = {
+        type = "server",
+        host = "127.0.0.1",
+        port = 6006,
+    }
+
+    dap.configurations.gdscript = {
+        {
+            launch_game_instance = false,
+            launch_scene = false,
+            name = "Launch scene",
+            project = "${workspaceFolder}",
+            request = "launch",
+            type = "godot",
+        },
+    }
+end
+
+setup_godot_dap()
 
 -- TODO turning off for now want to see if i can change this to work for errors
 -- and warnings only, and keep inline for other diagnostics
