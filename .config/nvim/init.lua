@@ -67,8 +67,10 @@ vim.g.loaded_netrwPlugin =1
 
 -- telescope fuzzy finder
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<F5>', builtin.find_files, {})
-vim.keymap.set('n', '<F6>', builtin.git_files, {})
+vim.keymap.set('n', '<F5>', builtin.git_files, {})
+vim.keymap.set('n', '<F6>', builtin.live_grep, {})
+vim.keymap.set('n', '<F7>', builtin.find_files, {})
+
 vim.keymap.set('n', '<F8>', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)

@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
     use 'RRethy/nvim-base16'
     use 'norcalli/nvim-colorizer.lua'
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
