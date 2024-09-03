@@ -46,15 +46,18 @@ sudo -u minecraft gcc mcrcon.c -o mcrcon
 sudo -u minecraft cp mcrcon ${baseDir}/
 
 cp -p $serviceFileTemplate $serviceFileTmp
-sed -i "s/BASE_DIR/${baseDir}/g" $serviceFileTmp
+sed -i "s'BASE_DIR'${baseDir}'g" $serviceFileTmp
 sed -i "s/RCON_PORT/${rconPort}/g" $serviceFileTmp
 sed -i "s/RCON_PASS/${rconPass}/g" $serviceFileTmp
+sudo mv $serviceFileTmp $serviceFile
+sudo chown root:root $serviceFile
 
 cp -p $serverPropsTemplate $serverPropsTmp
 sed -i "s/RCON_PORT/${rconPort}/g" $serverPropsTmp
 sed -i "s/RCON_PASS/${rconPass}/g" $serverPropsTmp
-
 sudo mv $serverPropsTmp $serverProps
-sudo mv $serviceFileTmp $serviceFile
+sudo chown minecraft:minecraft $serverProps
+
+sudo -u minecraft sed -i "s/eula=false/eula=true/g" $baseDir/server/eula.txt
 
 pEnd

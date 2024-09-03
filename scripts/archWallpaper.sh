@@ -5,6 +5,7 @@
 #############################################################
 source "$S/PABLO.sh"
 
+
 wallpaperDir="$HOME/wallpaper"
 
 lastDisplayed="$outputDir/lastImage.txt"
@@ -15,14 +16,14 @@ whoami
 
 if [ -f "$lastDisplayed" ]; then
     lastImageName=$(cat "${lastDisplayed}")
-    pLog "Last iamge used was ${lastImageName}"
+    pLog "Last image used was ${lastImageName}"
 else
     pMasterLog "no file found at $lastDisplayed: will create"
     touch "$lastDisplayed"
     pCheckError $? "touch $lastDisplayed"
 fi
 
-# use Next flag true when lastDisplayed found set true to seelct first image
+# use Next flag true when lastDisplayed found set true to select first image
 useNext=true
 for entry in "$wallpaperDir"/*
 do
