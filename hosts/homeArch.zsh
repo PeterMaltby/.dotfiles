@@ -12,13 +12,48 @@ path+=('/home/peterm/.cargo/bin')
 export PATH
 
 parse_git_branch() {
+    gitBranch=$(git rev-parse --abbrev-ref HEAD) 2> /dev/null
+    if [ "$?" != 0 ]; then
+      return
+    fi
 
-    gitStatus=$(git status --porcelain | wc -l) 2> /dev/null
+    (&>/dev/null git fetch &)
+    
+    headHash=$(git rev-parse HEAD)
+    upstreamHash=$(git rev-parse origin/${gitBranch})
 
-    if [ "$gitStatus" -eq 0 ]; then
-      git symbolic-ref --short HEAD 2> /dev/null | sed -E 's/(.+)/ (%F{2}\1%f)/g'
+    originHasLocalHash=$(git log origin/${gitBranch} | grep $headHash | wc -l)
+    localHasOriginHash=$(git log | grep $upstreamHash | wc -l)
+    gitStatus=$(git status --porcelain | wc -l)
+
+    #echo "\n"
+    #echo $originHasLocalHash
+    #echo $localHasOriginHash
+    #echo $gitStatus
+    #echo "\n"
+
+    if [ "$localHasOriginHash" -eq 0 ]; then
+      # origin has work local does not
+      echo " (%F{1}${gitBranch}%f)"
     else
-      git symbolic-ref --short HEAD 2> /dev/null | sed -E 's/(.+)/ (%F{3}\1%f)/g'
+      if [ "$originHasLocalHash" -eq 0 ]; then
+        # we have commits origin does not
+        if [ "$gitStatus" -eq 0 ]; then
+          # our branch is clean
+          echo " (%F{2}${gitBranch}%f)"
+        else
+          # we have local changes
+          echo " (%F{9}${gitBranch}%f)"
+        fi
+      else
+        if [ "$gitStatus" -eq 0 ]; then
+          # our branch is clean
+          echo " (%F{6}${gitBranch}%f)"
+        else
+          # we have local changes
+          echo " (%F{3}${gitBranch}%f)"
+        fi
+      fi
     fi
 
 }
