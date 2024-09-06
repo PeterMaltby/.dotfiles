@@ -20,7 +20,13 @@ parse_git_branch() {
     (&>/dev/null git fetch &)
     
     headHash=$(git rev-parse HEAD)
-    upstreamHash=$(git rev-parse origin/${gitBranch})
+    upstreamHash=$(git rev-parse origin/${gitBranch}) 2> /dev/null
+    if [ "$?" != 0 ]; then
+      # assume that head is not tracking origin
+      echo " (%F{5}${gitBranch}%f)"
+      return
+    fi
+
 
     originHasLocalHash=$(git log origin/${gitBranch} | grep $headHash | wc -l)
     localHasOriginHash=$(git log | grep $upstreamHash | wc -l)
