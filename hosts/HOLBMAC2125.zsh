@@ -19,7 +19,56 @@ alias lsa='ls -Alrth --color=auto'
 
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 
-PS1='%n%B@%F{9}%m%f%b %~ %(!.#.$) '
+parse_git_branch() {
+    gitBranch=$(git rev-parse --abbrev-ref HEAD) 2> /dev/null
+    if [ "$?" != 0 ]; then
+      return
+    fi
+
+    (&>/dev/null git fetch &)
+    
+    headHash=$(git rev-parse HEAD)
+    upstreamHash=$(git rev-parse origin/${gitBranch})
+
+    originHasLocalHash=$(git log origin/${gitBranch} | grep $headHash | wc -l)
+    localHasOriginHash=$(git log | grep $upstreamHash | wc -l)
+    gitStatus=$(git status --porcelain | wc -l)
+
+    #echo "\n"
+    #echo $originHasLocalHash
+    #echo $localHasOriginHash
+    #echo $gitStatus
+    #echo "\n"
+
+    if [ "$localHasOriginHash" -eq 0 ]; then
+      # origin has work local does not
+      echo " (%F{1}${gitBranch}%f)"
+    else
+      if [ "$originHasLocalHash" -eq 0 ]; then
+        # we have commits origin does not
+        if [ "$gitStatus" -eq 0 ]; then
+          # our branch is clean
+          echo " (%F{2}${gitBranch}%f)"
+        else
+          # we have local changes
+          echo " (%F{9}${gitBranch}%f)"
+        fi
+      else
+        if [ "$gitStatus" -eq 0 ]; then
+          # our branch is clean
+          echo " (%F{6}${gitBranch}%f)"
+        else
+          # we have local changes
+          echo " (%F{3}${gitBranch}%f)"
+        fi
+      fi
+    fi
+
+}
+
+setopt prompt_subst
+
+prompt='%n%B@%F{9}%m%f%b %~$(parse_git_branch) %(!.#.$) '
 neofetch
 
 # volta stuff
