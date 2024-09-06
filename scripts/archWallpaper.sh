@@ -37,10 +37,11 @@ do
 
 done
 
+echo "$newWallpaper" > "$lastDisplayed"
+
 pMasterLog "new wallpaper will be: $newWallpaper"
 feh --bg-scale "$newWallpaper"
 pCheckError $? "feh"
 
-echo "$newWallpaper" > "$lastDisplayed"
 
 pEnd
