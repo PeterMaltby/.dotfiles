@@ -18,7 +18,7 @@ vim.opt.relativenumber = true
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 8
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 
 vim.opt.smartindent = true
 vim.opt.autoindent = true
@@ -120,9 +120,7 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format({ 
             async = false,
             timeout_ms = 10000, 
-            formatting_options = {
-                tabSize = 4,
-        }})
+        })
     end, opts)
 end)
 
