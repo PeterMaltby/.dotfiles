@@ -8,6 +8,8 @@
 #                                                                      
 #############################################################
 
+export XPLANE=/home/peterm/.local/share/Steam/steamapps/common/X-Plane\ 12
+
 path+=('/home/peterm/.cargo/bin') 
 export PATH
 
