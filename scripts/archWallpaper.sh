@@ -5,7 +5,6 @@
 #############################################################
 source "$S/PABLO.sh"
 
-
 wallpaperDir="$HOME/wallpaper"
 
 lastDisplayed="$outputDir/lastImage.txt"

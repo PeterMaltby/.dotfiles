@@ -66,6 +66,13 @@ if [ -r ${hostSecretRcPath} ]; then
     source ${hostSecretRcPath}
 fi
 
-
+source /usr/share/nvm/init-nvm.sh
 unset hostName
 unset hostRcPath
+
+# bun completions
+[ -s "/home/peterm/.bun/_bun" ] && source "/home/peterm/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
