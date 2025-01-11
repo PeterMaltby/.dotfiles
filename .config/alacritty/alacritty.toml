@@ -35,3 +35,6 @@ style = "Regular"
 
 [window]
 opacity = 0.8
+
+[env]
+WINIT_X11_SCALE_FACTOR="1.0"
