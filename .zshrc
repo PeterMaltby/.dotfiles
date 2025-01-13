@@ -66,7 +66,6 @@ if [ -r ${hostSecretRcPath} ]; then
     source ${hostSecretRcPath}
 fi
 
-source /usr/share/nvm/init-nvm.sh
 unset hostName
 unset hostRcPath
 
