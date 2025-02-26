@@ -19,6 +19,8 @@ alias lsa='ls -Alrth --color=auto'
 
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 
+export AZURE_ADDITIONALLY_ALLOWED_TENANTS="e11fd634-26b5-47f4-8b8c-908e466e9bdf"
+
 parse_git_branch() {
     gitBranch=$(git rev-parse --abbrev-ref HEAD) 2> /dev/null
     if [ "$?" != 0 ]; then
@@ -89,7 +91,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 alias tf='terraform'
 
 # k9s
-alias k9sp='k9s --context aks-prod-cluster'
+alias k9sp='k9s --context aks-prod-cluster --readonly'
 alias k9sn='k9s --context aks-nprd-cluster'
 
 export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=true
