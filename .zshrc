@@ -68,8 +68,6 @@ fi
 
 unset hostName
 unset hostRcPath
-<<<<<<< HEAD
-=======
 
 # tf
 alias tf='terraform'
