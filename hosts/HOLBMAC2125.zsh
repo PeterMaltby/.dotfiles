@@ -83,9 +83,6 @@ neofetch
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-# tf
-alias tf='terraform'
-
 # k9s
 alias k9sp='k9s --context aks-prod-cluster --readonly'
 alias k9sn='k9s --context aks-nprd-cluster'
