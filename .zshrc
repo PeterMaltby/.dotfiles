@@ -68,10 +68,3 @@ fi
 
 unset hostName
 unset hostRcPath
-
-# bun completions
-[ -s "/home/peterm/.bun/_bun" ] && source "/home/peterm/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
