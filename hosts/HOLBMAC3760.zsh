@@ -13,6 +13,7 @@
 #       
 #############################################################
 # machine specific zshrc
+export PATH="/opt/homebrew/bin:$PATH"
 
 alias ls='ls -lrth --color=auto'
 alias lsa='ls -Alrth --color=auto'

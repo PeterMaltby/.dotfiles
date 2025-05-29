@@ -14,7 +14,7 @@ vim.opt.mouse = ""
 
 vim.opt.guicursor = ""
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 8
@@ -42,7 +42,7 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-vim.opt.spelllang="en_gb"
+vim.opt.spelllang = "en_gb"
 vim.opt.spell = true
 
 Color = Color or "base16-woodland"
@@ -50,20 +50,20 @@ vim.cmd.colorscheme(Color)
 
 --templates
 
-local augroupId = vim.api.nvim_create_augroup("templates", {clear = true})
-vim.api.nvim_create_autocmd("BufNewFile" , {
+local augroupId = vim.api.nvim_create_augroup("templates", { clear = true })
+vim.api.nvim_create_autocmd("BufNewFile", {
     pattern = "*.*",
     command = [[silent! execute ' 0r $HOME/.config/nvim/templates/skeleton.'.expand('<afile>:e')]]
 })
-vim.api.nvim_create_autocmd("BufNewFile" , {
+vim.api.nvim_create_autocmd("BufNewFile", {
     pattern = "*",
     command = [[%s#\[:EVAL:]\(.\{-\}\)\[:END:]#\=eval(submatch(1))#ge]]
 })
 vim.api.nvim_del_augroup_by_id(augroupId)
 
 -- disable netrw for nvim-tree
-vim.g.loaded_netrw =1
-vim.g.loaded_netrwPlugin =1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- telescope fuzzy finder
 local builtin = require('telescope.builtin')
@@ -80,7 +80,7 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 
 -- treesitter
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query" ,"wgsl", "javascript", "typescript" },
+    ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query", "wgsl", "javascript", "typescript" },
     sync_install = false,
     auto_install = true,
 
@@ -90,54 +90,54 @@ require 'nvim-treesitter.configs'.setup {
     },
 
 
-   incremental_selection = {
+    incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
+            init_selection = "<C-space>",
+            node_incremental = "<C-space>",
+            scope_incremental = false,
+            node_decremental = "<bs>",
         },
-      },
+    },
 }
 
--- lsp-zero
-local lsp = require('lsp-zero').preset({
-    name = 'minimal',
-    set_lsp_keymaps = true,
-    manage_nvim_cmp = true,
-    suggest_lsp_servers = false,
+vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {})
+vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {})
+vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {})
+vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {})
 
-    vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {}),
-    vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {}),
-    vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {}),
-    vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {}),
-})
-
-lsp.on_attach(function(client, bufnr)
-    local opts = { buffer = bufnr }
-    vim.keymap.set({ 'n', 'x' }, '<F3>', function()
-        vim.lsp.buf.format({ 
-            async = false,
-            timeout_ms = 10000, 
-        })
-    end, opts)
-end)
-
-
-lsp.set_sign_icons({
-    error = 'X',
-    warn = '!',
-    hint = '?',
-    info = 'i'
-})
-
-lsp.nvim_workspace()
-lsp.setup()
+vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+    vim.lsp.buf.format({
+        async = false,
+        timeout_ms = 10000,
+    })
+end, opts)
 
 vim.diagnostic.config({
     virtual_text = true
 })
+
+require('mason').setup()
+
+require('mason-lspconfig').setup({
+    ensure_installed = {
+    }
+})
+
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lsp_attach = function(client, bufnr)
+    -- Create your keybindings here...
+end
+
+-- local lspconfig = require('lspconfig')
+-- require('mason-lspconfig').setup_handlers({
+--   function(server_name)
+--     lspconfig[server_name].setup({
+--       on_attach = lsp_attach,
+--       capabilities = lsp_capabilities,
+--     })
+--   end,
+-- })
 
 require('lualine').setup {
     options = {
@@ -195,6 +195,9 @@ require("nvim-tree").setup()
 
 -- colorizer
 require("colorizer").setup()
+
+-- mason
+require("mason").setup()
 
 -- TODO turning off for now want to see if i can change this to work for errors
 -- and warnings only, and keep inline for other diagnostics
