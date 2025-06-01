@@ -87,18 +87,19 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
--- vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {})
--- vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {})
--- vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {})
--- vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {})
+-- lsp keymaps
+vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {})
+vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {})
+vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {})
+vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {})
 
--- vim.keymap.set({ 'n', 'x' }, '<F3>', function()
---     vim.lsp.buf.format({
---         async = false,
---         timeout_ms = 10000,
---     })
--- end, opts)
--- 
--- vim.diagnostic.config({
---     virtual_text = true
--- })
+vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+    vim.lsp.buf.format({
+        async = false,
+        timeout_ms = 10000,
+    })
+end, opts)
+
+vim.diagnostic.config({
+    virtual_text = true
+})
