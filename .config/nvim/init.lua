@@ -7,9 +7,27 @@
 -- |___||_|\_||___|  |_|
 --
 -------------------------------------------------------------
-require("plugins")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
 -- Basic vim stuff
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 vim.opt.mouse = ""
 
 vim.opt.guicursor = ""
@@ -49,7 +67,6 @@ Color = Color or "base16-woodland"
 vim.cmd.colorscheme(Color)
 
 --templates
-
 local augroupId = vim.api.nvim_create_augroup("templates", { clear = true })
 vim.api.nvim_create_autocmd("BufNewFile", {
     pattern = "*.*",
@@ -61,144 +78,27 @@ vim.api.nvim_create_autocmd("BufNewFile", {
 })
 vim.api.nvim_del_augroup_by_id(augroupId)
 
--- disable netrw for nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- telescope fuzzy finder
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<F5>', builtin.git_files, {})
-vim.keymap.set('n', '<F6>', builtin.live_grep, {})
-vim.keymap.set('n', '<F7>', builtin.find_files, {})
-
-vim.keymap.set('n', '<F8>', function()
-    builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
-
--- undo tree
-vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
-
--- treesitter
-require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query", "wgsl", "javascript", "typescript" },
-    sync_install = false,
-    auto_install = true,
-
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-
-
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-        },
-    },
-}
-
-vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {})
-vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {})
-vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {})
-vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {})
-
-vim.keymap.set({ 'n', 'x' }, '<F3>', function()
-    vim.lsp.buf.format({
-        async = false,
-        timeout_ms = 10000,
-    })
-end, opts)
-
-vim.diagnostic.config({
-    virtual_text = true
+-- Setup lazy.nvim
+require("lazy").setup({
+  spec = {
+    { import = "plugins" },
+  },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
 })
 
-require('mason').setup()
+-- vim.keymap.set('n', '<F9>', vim.lsp.buf.definition, {})
+-- vim.keymap.set('n', '<F10>', vim.lsp.buf.implementation, {})
+-- vim.keymap.set('n', '<F11>', vim.lsp.buf.references, {})
+-- vim.keymap.set('n', '<F12>', vim.lsp.buf.type_definition, {})
 
-require('mason-lspconfig').setup({
-    ensure_installed = {
-    }
-})
-
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lsp_attach = function(client, bufnr)
-    -- Create your keybindings here...
-end
-
--- local lspconfig = require('lspconfig')
--- require('mason-lspconfig').setup_handlers({
---   function(server_name)
---     lspconfig[server_name].setup({
---       on_attach = lsp_attach,
---       capabilities = lsp_capabilities,
+-- vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+--     vim.lsp.buf.format({
+--         async = false,
+--         timeout_ms = 10000,
 --     })
---   end,
+-- end, opts)
+-- 
+-- vim.diagnostic.config({
+--     virtual_text = true
 -- })
-
-require('lualine').setup {
-    options = {
-        icons_enabled = false,
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-        disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-        },
-        ignore_focus = {},
-        always_divide_middle = true,
-        globalstatus = false,
-        refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
-        }
-    },
-    sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
-        lualine_c = {
-            {
-                'filename',
-                path = 1,
-            }
-        },
-        lualine_x = {
-            {
-                'diagnostics',
-                symbols = { error = 'X:', warn = '!:', info = 'i:', hint = '?:' },
-                always_visible = true,
-            }
-        },
-        lualine_y = { 'location' },
-        lualine_z = { 'encoding' },
-    },
-    inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = { 'location' },
-        lualine_y = {},
-        lualine_z = {}
-    },
-    tabline = {},
-    winbar = {},
-    inactive_winbar = {},
-    extensions = {}
-}
-
--- nvim-tree
-require("nvim-tree").setup()
-
--- colorizer
-require("colorizer").setup()
-
--- mason
-require("mason").setup()
-
--- TODO turning off for now want to see if i can change this to work for errors
--- and warnings only, and keep inline for other diagnostics
--- require("lsp_lines").setup()
