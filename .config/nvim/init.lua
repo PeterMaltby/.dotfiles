@@ -63,8 +63,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.spelllang = "en_gb"
 vim.opt.spell = true
 
-Color = Color or "base16-woodland"
-vim.cmd.colorscheme(Color)
+-- Color = Color or "base16-woodland"
+-- vim.cmd.colorscheme(Color)
 
 --templates
 local augroupId = vim.api.nvim_create_augroup("templates", { clear = true })
