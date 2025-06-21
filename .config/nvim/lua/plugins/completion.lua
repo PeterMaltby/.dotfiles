@@ -71,13 +71,13 @@ return {
 
                 ["<C-e>"] = cmp.mapping.close(),
 
-                ["<esc>"] = cmp.mapping(function(fallback)
-                     if cmp.visible() then
-                         cmp.abort()
-                     else
-                         fallback()
-                     end
-                 end, { "i", "c" }),
+                -- ["<esc>"] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         cmp.abort()
+                --     else
+                --         fallback()
+                --     end
+                -- end, { "i", "c" }),
 
 
                 -- ... Your other mappings ...
