@@ -20,8 +20,6 @@ export PATH="$PATH:/Users/peter.maltby1/bin"
 alias ls='ls -lrth --color=auto'
 alias lsa='ls -Alrth --color=auto'
 
-defaults write .GlobalPreferences com.apple.mouse.scaling -1
-
 export AZURE_ADDITIONALLY_ALLOWED_TENANTS="e11fd634-26b5-47f4-8b8c-908e466e9bdf"
 
 parse_git_branch() {
