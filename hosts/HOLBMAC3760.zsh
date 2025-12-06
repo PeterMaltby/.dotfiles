@@ -80,7 +80,7 @@ parse_git_branch() {
 setopt prompt_subst
 
 prompt='%n%B@%F{9}%m%f%b %~$(parse_git_branch) %(!.#.$) '
-neofetch
+fastfetch
 
 # volta stuff
 export VOLTA_HOME="$HOME/.volta"
