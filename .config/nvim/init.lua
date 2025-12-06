@@ -25,7 +25,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Basic vim stuff
-vim.g.mapleader = " "
+vim.g.mapleader = "\\"      -- Using backslash as leader temporarily for testing
 vim.g.maplocalleader = "\\"
 
 vim.opt.mouse = ""

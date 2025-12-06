@@ -17,6 +17,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 export PATH="$PATH:/Users/peter.maltby1/bin"
 
+export PATH="$PATH:/usr/local/bin"
+
 alias ls='ls -lrth --color=auto'
 alias lsa='ls -Alrth --color=auto'
 
@@ -87,3 +89,5 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # k9s
 alias k9sp='k9s --context aks-prod-cluster --readonly'
 alias k9sn='k9s --context aks-nprd-cluster'
+
+

@@ -26,7 +26,7 @@ return {
             },
             sources = require('cmp').config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' },
                 { name = "buffer" },
                 { name = "path" },
             }),
@@ -71,16 +71,6 @@ return {
 
                 ["<C-e>"] = cmp.mapping.close(),
 
-                -- ["<esc>"] = cmp.mapping(function(fallback)
-                --     if cmp.visible() then
-                --         cmp.abort()
-                --     else
-                --         fallback()
-                --     end
-                -- end, { "i", "c" }),
-
-
-                -- ... Your other mappings ...
             },
         })
     end,
