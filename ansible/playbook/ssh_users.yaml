@@ -1,14 +1,8 @@
 - name: set up my User and add SSH keys
-  hosts:
-    - vmArch
+  hosts: all
   become: true
-  vars: 
-    users:
-      - name: peterm
-        auth_key_path: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519.pub"
-        groups: "wheel"
-      - name: lauraf
-        auth_key_path: ""
+  connection: ssh
+
 
   tasks:
     - name: Add users
