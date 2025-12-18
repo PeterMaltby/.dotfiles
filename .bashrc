@@ -28,7 +28,7 @@ hostRcPath="${HOME}/hosts/${hostName}.bash"
 if [ -r "${hostRcPath}" ]; then
     source "${hostRcPath}"
 else
-    source="${HOME}/hosts/default.bash"
+    source "${HOME}/hosts/default.bash"
 fi
 
 unset hostName
