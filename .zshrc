@@ -109,9 +109,7 @@ hostRcPath="${HOME}/hosts/${hostName}.zsh"
 if [ -r ${hostRcPath} ]; then
 	source ${hostRcPath}
 else
-	# i have to set each PS1 in host.zsh to set color if there is a better way to do this please let me know!
-	PS1='%B%n%b@%F{1}%m%f %~ %(!.#.$) '
-	echo "unrecognised host: $hostName"
+    source="${HOME}/hosts/default.zsh"
 fi
 
 # for storing secret stuff i dont want git to know about

@@ -25,11 +25,10 @@ alias ....='cd ../../..'
 hostName=$(hostname)
 hostRcPath="${HOME}/hosts/${hostName}.bash"
 
-if [ -r ${hostRcPath} ]; then
-	source "${hostRcPath}"
+if [ -r "${hostRcPath}" ]; then
+    source "${hostRcPath}"
 else
-	echo "unknown host ${hostName}"
-	PS1='\[\e[0m\]\u\[\e[0m\]@\[\e[1;31;40m\]\h \[\e[0m\]\w \[\e[0m\]\$ \[\e[0m\]'
+    source="${HOME}/hosts/default.bash"
 fi
 
 unset hostName
