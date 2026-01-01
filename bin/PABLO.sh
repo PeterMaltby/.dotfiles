@@ -169,7 +169,10 @@ trap 'pKill' SIGINT SIGTERM
 pCheckCommandAvail() {
     local cmd=${1}
     local message=${2:-"required command unavailable \"${cmd}\" please install and retry"}
-    type "${cmd}" >/dev/null 2>&1 || pFail "${message}"
+
+    if command -v "${cmd}" > /dev/null; then
+        log_debug "found command \"${cmd}\" found"
+    fi
 }
 
 pCheckFileExist() {
