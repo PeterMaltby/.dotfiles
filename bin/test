@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# test.sh
+# author: peterm
+# created: 2026-01-01
+#############################################################
+source "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/PABLO.sh"
+
+#############################################################
+pStart
+
+log_info "hello world"
+log_warn "hello world"
+log_error "hello world"
+
+
+pCheckCommandAvail git
+pAskToContinue "break stuff"
+
