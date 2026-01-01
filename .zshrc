@@ -13,6 +13,7 @@ export S=~/scripts
 export D=~/Downloads
 export DT=~/Desktop
 export G=~/gitrepos
+export B=~/bin
 
 export EDITOR=vim
 export HISTCONTROL=ignoreboth

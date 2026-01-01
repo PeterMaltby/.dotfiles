@@ -2,20 +2,18 @@
 # PABLO.sh
 # created: 2022-10-08
 ############################################################
-if [[ -n "${PABLO_LOADED}" ]]; then 
+if [[ -n "${PABLO_LOADED}" ]]; then
     pError "PABLO ALREADY RUNNING"
     exit 1
 fi
 readonly PABLO_LOADED=1
 
-dateStamp=$(date "+%Y%m%d")
-timeStamp=$(date "+%H%M")
 scriptNameFull=${0##*/}
 scriptName=$(echo "${0##*/}" | cut -d. -f1)
 pid=$$
 
 # should be where script file is in my bin
-binDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+binDir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 # For temporary files related to script
 tmpDir=/tmp/pablo
 # script specific directory
@@ -34,8 +32,22 @@ mkdir -p "${inputDir}"
 # mkdir -p "${outputDir}"
 mkdir -p "${tmpDir}"
 
+log_debug() {
+    local message=${1}
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
-log_info () {
+    # always log
+    logger -t "${scriptName}" -p debug "${message}"
+
+    # if quite leave and dont log out to screen
+    if [ "$DEBUG" == true ]; then
+        # log to screen
+        echo -e "${timestamp} [\033[0;35mDEBUG\033[0m] [${pid}:${scriptName}] ${message}"
+    fi
+
+}
+
+log_info() {
     local message=${1}
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
@@ -45,13 +57,13 @@ log_info () {
     # if quite leave and dont log out to screen
     if [ $quiteMode == true ]; then
         return 0
-    fi 
+    fi
 
     # log to screen
     echo -e "${timestamp} [\033[0;34mINFO\033[0m] [${pid}:${scriptName}] ${message}"
 }
 
-log_warn () {
+log_warn() {
     local message=${1}
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
@@ -61,14 +73,14 @@ log_warn () {
     # if quite leave and dont log out to screen
     if [ $quiteMode == true ]; then
         return 0
-    fi 
+    fi
 
     # log to screen
     echo -e "${timestamp} [\033[0;33mWARN\033[0m] [${pid}:${scriptName}] ${message}"
 }
 
 # create log on script log only
-log_error () {
+log_error() {
     local message=${1}
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
@@ -88,9 +100,9 @@ pFail() {
 
     # turn logging on in failure
     quiteMode=false
-    
+
     log_error "$message"
-    exit $return_code
+    exit "$return_code"
 }
 
 # if kill command recieved
@@ -106,7 +118,7 @@ pCheckIsRoot() {
 }
 
 # used at start of script to initiate PABLO script run
-pStart () {
+pStart() {
     # stop script if error
     set -o errexit
     # fail if any command fails in pipeline
@@ -115,38 +127,37 @@ pStart () {
     startTimeStamp=$(date +%s)
     # regex to check valid script name
     checkRegex="^[0-9a-zA-Z_-]+(\.sh)?$"
-    
+
     # if script name is invalid fail TODO dont think this is needed
     if [[ ! ${scriptNameFull} =~ ${checkRegex} ]]; then
-    	pFail "PABLO: pStart failed: name script name invalid \"${scriptNameFull}\"" 1
+        pFail "PABLO: pStart failed: name script name invalid \"${scriptNameFull}\"" 1
     fi
-    
+
     # delete retained outputs
     # find "${outputDir}" -type f -mtime +${outputRetention} -exec rm -f {} \;
-    
-    log_info "PABLO STARTED: with PID \"${pid}\""
+
+    log_debug "PABLO STARTED: with PID \"${pid}\""
 }
 
-
 # cleans up resources on EXIT
-pCleanup () {
-        returnCode=${1:-0}
-	# Remove temp files
-	rm -f "${tmpDir}/*"
-	rmRet=$?
-	if [ $rmRet != 0 ]; then
-            log_error "PABLO: unable to removing temporary files at \"$tmpDir\", rm returned \"$rmRet\""
-        else
-            log_info "PABLO: removed temporary files at \"$tmpDir\""
-	fi
+pCleanup() {
+    returnCode=${1:-0}
+    # Remove temp files
+    rm -f "${tmpDir}/*"
+    rmRet=$?
+    if [ $rmRet != 0 ]; then
+        log_error "PABLO: unable to removing temporary files at \"$tmpDir\", rm returned \"$rmRet\""
+    else
+        log_debug "removed temporary files at \"$tmpDir\""
+    fi
 
-	finishTimeStamp=$(date +%s)
-	totalExecTime=$(($finishTimeStamp - $startTimeStamp))
-	
-        log_info "finished execution in ${totalExecTime} secs (PID \"${pid}\")"
-        log_info "return code: ${returnCode}"
+    finishTimeStamp=$(date +%s)
+    totalExecTime=$(($finishTimeStamp - $startTimeStamp))
 
-	exit "$returnCode"
+    log_info "finished execution in ${totalExecTime} secs (PID \"${pid}\")"
+    log_info "return code: ${returnCode}"
+
+    exit "$returnCode"
 }
 
 # Cleanup on execution stop
@@ -157,13 +168,14 @@ trap 'pKill' SIGINT SIGTERM
 
 pCheckCommandAvail() {
     local cmd=${1}
-    type ${cmd} >/dev/null 2>&1 || pFail "required command unavailable \"${cmd}\, please install and retry"
+    local message=${2:-"required command unavailable \"${cmd}\" please install and retry"}
+    type "${cmd}" >/dev/null 2>&1 || pFail "${message}"
 }
 
 pCheckFileExist() {
     local file=${1}
     if [[ ! -f "${file}" ]]; then
-        pFail "required file unavailable \"${file}\, please ensure file exists and retry"
+        pFail "required file unavailable \"${file}\""
     fi
 }
 
@@ -175,15 +187,37 @@ pCheckFileNotExist() {
 }
 
 pAskToContinue() {
-  local msg=${1}
-  local waitingforanswer=true
-  while ${waitingforanswer}; do
-    read -p "${msg} (hit 'y/Y' to continue, 'n/N' to cancel) " -n 1 ynanswer
-    case ${ynanswer} in
-      [Yy] ) waitingforanswer=false; break;;
-      [Nn] ) echo ""; pKill ;;
-      *    ) echo ""; echo "Please answer either yes (y/Y) or no (n/N).";;
-    esac
-  done
-  echo ""
+    local msg=${1}
+    local waitingforanswer=true
+    while ${waitingforanswer}; do
+        read -rp "${msg} (hit 'y/Y' to continue, 'n/N' to cancel) " -n 1 ynanswer
+        case ${ynanswer} in
+        [Yy])
+            waitingforanswer=false
+            break
+            ;;
+        [Nn])
+            echo ""
+            pKill
+            ;;
+        *)
+            echo ""
+            echo "Please answer either yes (y/Y) or no (n/N)."
+            ;;
+        esac
+    done
+    echo ""
+}
+
+pAppendIfAbsent() {
+    local str=${1}
+    local file=${2}
+
+    if grep -q "${str}" "${file}"; then
+        log_info "\"${str}\" is in /"${file}/""
+    else
+        log_info "adding \"${str}\" to \"${file}\""
+        sed -i "s/$/ ${str}/" "${file}"
+        echo "${str}" >> "${file}"
+    fi
 }
