@@ -8,6 +8,8 @@
 #                                                                      
 #############################################################
 
+# prisma luancher
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk/jre"
 
 setopt prompt_subst
 
