@@ -11,5 +11,5 @@
 
 setopt prompt_subst
 
-# prompt='%n%B@%F{4}%m%f%b %~$(parse_git_branch) %(!.#.$) '
+prompt='%n%B@%F{4}%m%f%b %~$(parse_git_branch) %(!.#.$) '
 fastfetch --color blue --logo-color-1 blue --logo-color-2 blue
