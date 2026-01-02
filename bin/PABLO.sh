@@ -212,15 +212,15 @@ pAskToContinue() {
     echo ""
 }
 
+# this adds to last line atm but most file probs need better handling
 pAppendIfAbsent() {
     local str=${1}
     local file=${2}
 
     if grep -q "${str}" "${file}"; then
-        log_info "\"${str}\" is in /"${file}/""
+        log_info "\"${str}\" is in \"${file}\""
     else
         log_info "adding \"${str}\" to \"${file}\""
-        sed -i "s/$/ ${str}/" "${file}"
-        echo "${str}" >> "${file}"
+        sed -i "$ s/$/ ${str}/" "${file}"
     fi
 }

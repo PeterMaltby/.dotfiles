@@ -4,7 +4,6 @@ userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
-S=/home/peterm/scripts
 
 # merge in defaults and keymaps
 
@@ -39,10 +38,7 @@ fi
 
 # clock check of xsetroot works first
 if command -v xsetroot &> /dev/null; then
-    while true; do
-        xsetroot -name "$(date "+%Y-%m-%d %T")"
-        sleep 1s
-    done
+    /home/peterm/bin/dwmStatusBar.sh 2>&1 >/dev/null &
 else
     echo "xsetroot not installed cant do time"
 fi
