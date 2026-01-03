@@ -24,6 +24,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias ls='ls -lrh --group-directories-first --color=auto'
 alias lsa='ls -Alrh --group-directories-first --color=auto'
+alias lss='$B/fileSize'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."

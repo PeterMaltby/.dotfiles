@@ -137,6 +137,12 @@ pStart() {
     # find "${outputDir}" -type f -mtime +${outputRetention} -exec rm -f {} \;
 
     log_debug "PABLO STARTED: with PID \"${pid}\""
+
+    # Cleanup on execution stop
+    trap 'pCleanup $?' EXIT
+    # If error log and cleanup
+    trap 'pFail "Uncaught exception at line ${LINENO}" $?' ERR
+    trap 'pKill' SIGINT SIGTERM
 }
 
 # cleans up resources on EXIT
@@ -160,11 +166,6 @@ pCleanup() {
     exit "$returnCode"
 }
 
-# Cleanup on execution stop
-trap 'pCleanup $?' EXIT
-# If error log and cleanup
-trap 'pFail "Uncaught exception at line ${LINENO}" $?' ERR
-trap 'pKill' SIGINT SIGTERM
 
 pCheckCommandAvail() {
     local cmd=${1}
@@ -172,13 +173,15 @@ pCheckCommandAvail() {
 
     if command -v "${cmd}" > /dev/null; then
         log_debug "found command \"${cmd}\" found"
+    else 
+        pFail "${message}" 2
     fi
 }
 
 pCheckFileExist() {
     local file=${1}
     if [[ ! -f "${file}" ]]; then
-        pFail "required file unavailable \"${file}\""
+        pFail "required file unavailable \"${file}\"" 2
     fi
 }
 

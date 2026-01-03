@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# fileSize.sh
+# author: peterm
+# created: 2026-01-03
+#############################################################
+source "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/PABLO.sh"
+
+quiteMode=true
+pStart
+
+
+pCheckCommandAvail du
+pCheckCommandAvail sort
+
+du -sh ./* | sort -h
+
