@@ -6,13 +6,18 @@
 source "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/PABLO.sh"
 
 #############################################################
-pStart
+pStart "$@"
 
+log_debug "hello world"
 log_info "hello world"
 log_warn "hello world"
 log_error "hello world"
 
+check_is_root || pFail "must be root" 5
 
-pCheckCommandAvail git
-pAskToContinue "break stuff"
+check_command_avail git || {
+    log_error "git needed to work!"
+    exit 1
+}
+ask_to_continue "break stuff"
 

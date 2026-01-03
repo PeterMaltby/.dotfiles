@@ -14,11 +14,23 @@ pStart
 pCheckIsRoot
 
 # dirty check for raspberry pi
-pCheckCommandAvail raspiinfo "This script will only work on a rasberry pi"
+check_command raspiinfo "This script will only work on a rasberry pi"
 
 # Enable cgroups for k3s 
-pCheckFileExist ${cmdline}
+check_file_exists ${cmdline}
 
-pAppendIfAbsent "cgroups_memory=1" ${cmdline}
-pAppendIfAbsent "cgroup_enable=memory" ${cmdline}
+append_if_absent() {
+    local str=${1}
+    local file=${2}
+
+    if grep -q "${str}" "${file}"; then
+        log_info "\"${str}\" is in \"${file}\""
+    else
+        log_info "adding \"${str}\" to \"${file}\""
+        sed -i "$ s/$/ ${str}/" "${file}"
+    fi
+}
+
+append_if_absent "cgroups_memory=1" ${cmdline}
+append_if_absent "cgroup_enable=memory" ${cmdline}
 
