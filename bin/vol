@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-# test.sh
+# vol.sh
 # author: peterm
-# created: 2026-01-01
+# created: 2026-01-02
 #############################################################
 source "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/PABLO.sh"
 
+param="$1"
 #############################################################
 pStart
 
-log_info "hello world"
-log_warn "hello world"
-log_error "hello world"
+quiteMode=true
 
+pCheckCommandAvail pamixer
 
-pCheckCommandAvail git
-pAskToContinue "break stuff"
+if [[ -v param ]]; then
+    pamixer --set-volume "$param"
+else
+    pamixer --get-volume
+fi
 
