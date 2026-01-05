@@ -7,14 +7,13 @@ source "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/PAB
 
 param="$1"
 #############################################################
-pStart
+pStart "$@"
 
-quiteMode=true
+check_command_avail pamixer || handle_error "pamixer not installed" 1
 
-pCheckCommandAvail pamixer
-
-if [[ -v param ]]; then
+if [[ $param =~ ^[0-9]+$ ]]; then
     pamixer --set-volume "$param"
+    log_debug "set volume to \"$param\""
 else
     pamixer --get-volume
 fi
