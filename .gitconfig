@@ -1,7 +1,8 @@
 [alias]
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 	s = status -s
-	c = commit -m 
+        c = commit -m 
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
 	# amend staged files to latest commit
 	amend = commit --amend --reuse-message=HEAD
 	contrib = shortlog --summary --numbered
