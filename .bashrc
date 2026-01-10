@@ -35,6 +35,18 @@ weather() {
     curl wttr.in/Lincoln,+United+Kingdom 
 }
 
+# colours:
+BLACK='\e[30m'
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+MAGENTA='\e[35m'
+CYAN='\e[36m'
+WHITE='\e[37m'
+RESET='\e[0m'
+BRIGHT_RED='\e[91m'
+
 
 # git prompt script
 parse_git_branch() {
@@ -49,7 +61,7 @@ parse_git_branch() {
     upstreamHash=$(git rev-parse origin/${gitBranch}) 2> /dev/null
     if [ "$?" != 0 ]; then
       # assume that head is not tracking origin
-      echo " (%F{5}${gitBranch}%f)"
+      echo " (${MAGENTA}${gitBranch}${RESET})"
       return
     fi
 
@@ -66,24 +78,24 @@ parse_git_branch() {
 
     if [ "$localHasOriginHash" -eq 0 ]; then
       # origin has work local does not
-      echo " (%F{1}${gitBranch}%f)"
+      echo " (${RED}${gitBranch}${RESET})"
     else
       if [ "$originHasLocalHash" -eq 0 ]; then
         # we have commits origin does not
         if [ "$gitStatus" -eq 0 ]; then
           # our branch is clean
-          echo " (%F{2}${gitBranch}%f)"
+          echo " (${GREEN}${gitBranch}${RESET})"
         else
           # we have local changes
-          echo " (%F{9}${gitBranch}%f)"
+          echo " (${BRIGHT_RED}${gitBranch}${RESET})"
         fi
       else
         if [ "$gitStatus" -eq 0 ]; then
           # our branch is clean
-          echo " (%F{6}${gitBranch}%f)"
+          echo " (${CYAN}${gitBranch}${RESET})"
         else
           # we have local changes
-          echo " (%F{3}${gitBranch}%f)"
+          echo " (${YELLOW}${gitBranch}${RESET})"
         fi
       fi
     fi
