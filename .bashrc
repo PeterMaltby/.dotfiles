@@ -78,24 +78,24 @@ parse_git_branch() {
 
     if [ "$localHasOriginHash" -eq 0 ]; then
       # origin has work local does not
-      echo " (${RED}${gitBranch}${RESET})"
+      echo -e " (${RED}${gitBranch}${RESET})"
     else
       if [ "$originHasLocalHash" -eq 0 ]; then
         # we have commits origin does not
         if [ "$gitStatus" -eq 0 ]; then
           # our branch is clean
-          echo " (${GREEN}${gitBranch}${RESET})"
+          echo -e " (${GREEN}${gitBranch}${RESET})"
         else
           # we have local changes
-          echo " (${BRIGHT_RED}${gitBranch}${RESET})"
+          echo -e " (${BRIGHT_RED}${gitBranch}${RESET})"
         fi
       else
         if [ "$gitStatus" -eq 0 ]; then
           # our branch is clean
-          echo " (${CYAN}${gitBranch}${RESET})"
+          echo -e " (${CYAN}${gitBranch}${RESET})"
         else
           # we have local changes
-          echo " (${YELLOW}${gitBranch}${RESET})"
+          echo -e " (${YELLOW}${gitBranch}${RESET})"
         fi
       fi
     fi
