@@ -29,9 +29,6 @@ alias lss='$B/fileSize'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-alias vi="\vim"
-alias vim="\nvim"
-alias wiki="cd ~/peter-wiki/"
 
 weather() { 
     clear
@@ -41,7 +38,7 @@ weather() {
 
 # git prompt script
 parse_git_branch() {
-    gitBranch=$(git rev-parse --abbrev-ref HEAD) 2> /dev/null
+    gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
     if [ "$?" != 0 ]; then
       return
     fi
@@ -104,7 +101,7 @@ else
 fi
 
 # for storing secret stuff i dont want git to know about
-
+hostSecretRcPath="${hostRcPath}.secret"
 if [ -r ${hostSecretRcPath} ]; then
     source ${hostSecretRcPath}
 fi
