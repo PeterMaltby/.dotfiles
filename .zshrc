@@ -18,7 +18,6 @@ export G=~/gitrepos
 export B=~/bin
 
 export EDITOR=vim
-export HISTCONTROL=ignoreboth
 
 export LANG="en_GB.UTF-8"
 # alias scripts
@@ -41,8 +40,9 @@ weather() {
 
 # ZSH config
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTCONTROL=ignoreboth
 setopt autocd beep
 bindkey -v
 
