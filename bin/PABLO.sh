@@ -25,11 +25,8 @@ PABLO_LOG_LEVEL=2
 BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 # For temporary files related to script
 TEMP_DIR=/tmp/pablo
-# input dir for script inputs
-INPUT_DIR="${BIN_DIR}/input/${SCRIPT_NAME}"
 
 # ensures dirs are created
-mkdir -p "${INPUT_DIR}"
 mkdir -p "${TEMP_DIR}"
 
 # Usage: log_debug "my message here"
