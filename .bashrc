@@ -121,4 +121,3 @@ fi
 unset hostName
 unset hostRcPath
 unset hostSecretRcPath
-. "$HOME/.cargo/env"
