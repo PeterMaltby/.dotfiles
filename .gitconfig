@@ -5,7 +5,8 @@
 
 	# amend staged files to latest commit
 	amend = commit --amend --reuse-message=HEAD
-	contrib = shortlog --summary --numbered
+        contrib = shortlog --summary --numbered
+        b = branch --sort=-committerdate --format='%(committerdate:short) %(refname:short)'
 	
 [user]
 	email = contact@petermaltby.com
