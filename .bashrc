@@ -103,7 +103,7 @@ parse_git_branch() {
 }
 
 
-hostName=$HOST
+hostName=$(hostname)
 hostRcPath="${HOME}/hosts/${hostName}.bash"
 
 if [ -r ${hostRcPath} ]; then
@@ -115,6 +115,7 @@ fi
 # for storing secret stuff i dont want git to know about
 hostSecretRcPath="${hostRcPath}.secret"
 if [ -r ${hostSecretRcPath} ]; then
+    echo $hostSecretRcPath
     source ${hostSecretRcPath}
 fi
 
