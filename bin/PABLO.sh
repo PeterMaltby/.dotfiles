@@ -285,3 +285,6 @@ replace_file() {
     return 0
 
 }
+
+# Usage: user_exists "username"
+user_exists(){ id "$1" &>/dev/null; }
