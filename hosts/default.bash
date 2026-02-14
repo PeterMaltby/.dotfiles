@@ -1,4 +1,5 @@
 
 # red
-PS1='\u\[\e[38;5;203;1m\]@\[\e[31;40m\]\h\[\e[0m\] \w$(parse_git_branch)\$ '
-fastfetch
+COLOUR="38;5;203;1"
+PS1="\u@\[\e[${COLOUR}m\]\h\[\e[31;40m\] \[\e[0m\]\w \$ "
+# fastfetch --color $COLOUR
