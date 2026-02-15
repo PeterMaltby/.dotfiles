@@ -7,6 +7,8 @@
 # |___//_/ \_\|___/|_||_||_|_\ \___|
 #                                   
 #############################################################
+# no out put if not interactive
+[[ $- == *i* ]] || return
 export PATH="$HOME/bin:$PATH"
 
 # Environment vars
