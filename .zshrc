@@ -17,7 +17,8 @@ export DT=~/Desktop
 export G=~/gitrepos
 export B=~/bin
 
-export EDITOR=vim
+export EDITOR=nvim
+export MANPAGER='nvim +Man!'
 
 export LANG="en_GB.UTF-8"
 # alias scripts

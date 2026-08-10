@@ -90,4 +90,5 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 alias k9sp='k9s --context aks-prod-cluster --readonly'
 alias k9sn='k9s --context aks-nprd-cluster'
 
-
+# opencode
+export PATH=/Users/peter.maltby1/.opencode/bin:$PATH
